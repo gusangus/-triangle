@@ -3,7 +3,7 @@ trglk_is(){ # треугольник или не треугольник
 local a=$1
 local b=$2
 local c=$3   
- if [[ $(($a + $b)) -gt $c &&  $(($b + $c)) -gt $a && $(($c + $a)) -gt $b ]]; then  trglk "$a" "$b" "$c" >&2
+ if [[ $(($a + $b)) -gt $c &&  $(($b + $c)) -gt $a && $(($c + $a)) -gt $b ]]; then  trglk "$a" "$b" "$c" 
      else echo "такого треугольника нет"
 fi
 }
@@ -23,10 +23,10 @@ fi
 
 input(){ #проверяем входящие символы
 
-local a=$2
-local b=$3
-local c=$4
-if [ -z "${a//[0-9]}" ] && [ -n "$a" ] && [ -z "${b//[0-9]}" ] && [ -n "$b" ] && [ -z "${c//[0-9]}" ] && [ -n "$c" ]; then trglk_is "$a" "$b" "$c" >&2
+local a=$1
+local b=$2
+local c=$3
+if [ -z "${a//[0-9]}" ] && [ -n "$a" ] && [ -z "${b//[0-9]}" ] && [ -n "$b" ] && [ -z "${c//[0-9]}" ] && [ -n "$c" ]; then trglk_is "$a" "$b" "$c"
 else echo "не верные вводные" 
 fi
 
@@ -49,19 +49,12 @@ run_tests() {
 }
 
 main(){
-        echo -n "Введите целочисленное положительное значение a b c через пробел или табуляцию: "
-        read  a b c
+        echo -n "Введите целочисленное положительное значение a b c через пробел или табуляцию: " >&2 
+        read  a b c 
         input $a $b $c  #функция проверки введенных значений
 }
-if [ "$1" = "--test" ]; then 
+if [ "$1" = "--testing" ]; then 
  run_tests
-#a=$2
-#b=$3
-#c=$4
-#input  $a $b $c
-#trglk $a $b $c
-#trglk_is $a $b $c
-
 else  main
 
 fi
