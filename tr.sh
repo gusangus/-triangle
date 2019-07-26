@@ -4,8 +4,9 @@ local a=$1
 local b=$2
 local c=$3   
  if [[ $(($a + $b)) -gt $c &&  $(($b + $c)) -gt $a && $(($c + $a)) -gt $b ]]; then  trglk "$a" "$b" "$c" 
-     else echo "такого треугольника нет"
+     else echo "такого треугольника нет" >&2
 fi
+
 }
 
 trglk(){ #какой именно треугольник
@@ -27,10 +28,8 @@ local a=$1
 local b=$2
 local c=$3
 if [ -z "${a//[0-9]}" ] && [ -n "$a" ] && [ -z "${b//[0-9]}" ] && [ -n "$b" ] && [ -z "${c//[0-9]}" ] && [ -n "$c" ]; then trglk_is "$a" "$b" "$c"
-else echo "не верные вводные" 
+else echo "не верные вводные" >&2
 fi
-
-
 }
 
 run_tests() { 
@@ -49,12 +48,14 @@ run_tests() {
 }
 
 main(){
-        echo -n "Введите целочисленное положительное значение a b c через пробел или табуляцию: " >&2 
+
+#        echo -n "Введите целочисленное положительное значение a b c через пробел или табуляцию: " >&2 
         read  a b c 
         input $a $b $c  #функция проверки введенных значений
 }
-if [ "$1" = "--testing" ]; then 
- run_tests
-else  main
+#if [ "$1" = "--test" ]; then 
+# run_tests
+#else 
+ main
 
-fi
+#fi
